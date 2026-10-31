@@ -1,0 +1,12 @@
+﻿.dart_tool/
+.packages
+.pub/
+build/
+.idea/
+.vscode/
+
+# Exclude files assigned to Chien
+/lib/utils/responsive.dart
+/lib/widgets/summary_card.dart
+/lib/widgets/task_grid.dart
+/lib/widgets/task_card.dart
