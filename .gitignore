@@ -1,10 +1,7 @@
-﻿.dart_tool/
+.dart_tool/
 .packages
 .pub/
 build/
 .idea/
 .vscode/
-responsive_adaptive_flutter/lib/utils/responsive.dart
-responsive_adaptive_flutter/lib/widgets/summary_card.dart
-responsive_adaptive_flutter/lib/widgets/task_grid.dart
-responsive_adaptive_flutter/lib/widgets/task_card.dart
+**/ephemeral/

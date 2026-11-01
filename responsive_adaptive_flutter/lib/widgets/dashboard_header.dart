@@ -27,7 +27,7 @@ class DashboardHeader extends StatelessWidget {
           ],
         );
 
-        final avatar = const CircleAvatar(
+        const avatar = CircleAvatar(
           radius: 22,
           child: Icon(Icons.person_outline),
         );

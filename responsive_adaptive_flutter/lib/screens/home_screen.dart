@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../utils/responsive.dart';
 import '../widgets/adaptive_navigation.dart';
 import '../widgets/dashboard_header.dart';
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 1. MEDIA QUERY: Lấy kích thước toàn màn hình
+    // 1. MEDIA QUERY: Lấy kích thước cửa sổ ứng dụng
     final screenSize = MediaQuery.sizeOf(context);
     final screenWidth = screenSize.width;
     final screenHeight = screenSize.height;
@@ -138,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 14,
                     mainAxisSpacing: 14,
-                    childAspectRatio:
-                        screenType == ScreenType.mobile ? 1.55 : 1.7,
+                    // Reserve enough height when a breakpoint adds a column.
+                    mainAxisExtent: 220,
                     children: const [
                       SummaryCard(
                         title: 'Tổng công việc',
@@ -195,42 +196,47 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 24),
 
               // 5. HIỂN THỊ THÔNG TIN RESPONSIVE
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'THÔNG TIN RESPONSIVE',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final contentWidth = constraints.maxWidth;
+                  final columns = Responsive.gridColumns(contentWidth);
+                  return Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      'Chiều rộng màn hình: '
-                      '${screenWidth.toStringAsFixed(0)} px',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'THÔNG TIN RESPONSIVE',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Chiều rộng cửa sổ: '
+                          '${screenWidth.toStringAsFixed(0)} logical px',
+                        ),
+                        Text(
+                          'Chiều cao cửa sổ: '
+                          '${screenHeight.toStringAsFixed(0)} logical px',
+                        ),
+                        Text(
+                          'Chiều rộng nội dung: '
+                          '${contentWidth.toStringAsFixed(0)} logical px',
+                        ),
+                        Text('Số cột nội dung: $columns'),
+                        Text('Chế độ điều hướng: $typeName'),
+                        const Text('Breakpoint: <600 / 600–899 / ≥900 logical px'),
+                      ],
                     ),
-                    Text(
-                      'Chiều cao màn hình: '
-                      '${screenHeight.toStringAsFixed(0)} px',
-                    ),
-                    Text(
-                      'Chiều rộng khả dụng: '
-                      '${width.toStringAsFixed(0)} px',
-                    ),
-                    Text('Chế độ hiển thị: $typeName'),
-                    Text(
-                      'Breakpoint: <600 / 600–899 / ≥900 px',
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ],
           ),
